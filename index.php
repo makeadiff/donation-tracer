@@ -70,7 +70,7 @@ if(i($QUERY, 'action')) {
 							U.first_name,U.last_name, U.email, U.phone_no, C.name AS city_name
 					FROM $table D 
 					INNER JOIN donours DN ON DN.id=D.$donor_id
-					INNER JOIN users U ON U.id=D.updated_by
+					INNER JOIN users U ON U.id=D.fundraiser_id
 					INNER JOIN cities C ON U.city_id=C.id
 					WHERE " . implode(" AND ", $wheres);
 
@@ -84,7 +84,7 @@ if(i($QUERY, 'action')) {
 			array('url'=>'"users.php?action=edit&amp;id=$row[fundraiser_id]"', 'text'=>'$row["first_name"]. " " . $row["last_name"]'),'text', 'url');
 		$crud->addField('donour_id', 'Donor', 'int', array(), 
 			array('url'=>'"donors.php?action=edit&amp;id=$row[donour_id]"', 'text'=>'$row["donor_first_name"]. " " . $row["donor_last_name"]'),'text', 'url');
-		$crud->addField('updated_by', 'FundRaiser', 'int', array(), 
+		$crud->addField('updated_by', 'Updater', 'int', array(), 
 			array('url'=>'"users.php?action=edit&amp;id=$row[updated_by]"', 'text'=>'$row["first_name"]. " " . $row["last_name"]'),'text', 'url');
 
 		$crud->setListingFields('id', 'donour_id', 'fundraiser_id', 'donation_status', 'donation_amount', 'created_at', 'updated_at', 'updated_by', 'source_id', 'city_name');

@@ -40,7 +40,16 @@ if(i($QUERY, 'action')) {
 
 		if(!empty($_REQUEST['user_phone'])) {
 			$wheres[] = "(U.phone_no='$_REQUEST[user_phone]')";
-			$crud->save_states[] = 'donor_phone';
+			$crud->save_states[] = 'user_phone';
+		}
+		if(!empty($_REQUEST['user_id'])) {
+			$wheres[] = "(U.id='$_REQUEST[user_id]')";
+			$crud->save_states[] = 'user_id';
+		}
+
+		if(!empty($_REQUEST['user_email'])) {
+			$wheres[] = "(U.email='$_REQUEST[user_email]')";
+			$crud->save_states[] = 'user_email';
 		}
 
 		if(!empty($_REQUEST['poc_name'])) {
@@ -117,6 +126,12 @@ if(i($QUERY, 'action')) {
 
 <label for="user_phone">User Phone Number</label>
 <input type="text" name="user_phone" id="user_phone" value="" /><br />
+
+<label for="user_email">User Email</label>
+<input type="text" name="user_email" id="user_email" value="" /><br />
+
+<label for="user_id">User ID</label>
+<input type="text" name="user_id" id="user_id" value="" /><br />
 
 <label for="poc_name">POC Name</label>
 <input type="text" name="poc_name" id="poc_name" value="" /><br />

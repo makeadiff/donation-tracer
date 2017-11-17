@@ -88,6 +88,7 @@ if(i($QUERY, 'action')) {
 		// dump($data);
 
 		$crud->setListingQuery($query);
+		$crud->addField('id', 'ID', 'int', array(), array('url'=>'"donation.php?donation_id=$row[id]"', 'text'=>'$row["id"]'),'text', 'url');
 		$crud->addField('city_name', 'City', 'text', array(), array('text'=>'$row["city_name"]'));
 		$crud->addField('fundraiser_id', 'FundRaiser', 'int', array(), 
 			array('url'=>'"users.php?action=edit&amp;id=$row[fundraiser_id]"', 'text'=>'$row["first_name"]. " " . $row["last_name"]'),'text', 'url');

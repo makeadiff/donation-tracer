@@ -20,8 +20,6 @@ if($action) {
 		$PARAM['mistaken_fundraiser_id'] = $sql->getOne("SELECT id FROM users WHERE email='$mistaken_fundraiser_email'");
 		$PARAM['actual_fundraiser_id'] = $sql->getOne("SELECT id FROM users WHERE phone_no='$actual_fundraiser_phone'");
 
-		dump($PARAM);
-
 	} else if($mistaken_fundraiser_id and $actual_fundraiser_id) {
 		// Change donations.
 		$query['donations'] = "UPDATE donations SET fundraiser_id=$actual_fundraiser_id WHERE fundraiser_id=$mistaken_fundraiser_id AND created_at > '$change_donations_after 00:00:00'";

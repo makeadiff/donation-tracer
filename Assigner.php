@@ -1,5 +1,8 @@
 <?php
 require('common.php');
+
+/// Purpose: Lets you search for a user - and shows everyone they are assigned to and everyone assigned to them(no longer in use after we moved to a deposit format). Also, lets you change their role assignments)
+
 $html = new HTML;
 $result_users = array();
 $subordinates = array();
@@ -87,7 +90,7 @@ if(!empty($result_users)) {
 <?php
 }
 
-if($user) echo "<h2>$user_id - $user[first_name] $user[last_name]</h2>";
+if(isset($user)) echo "<h2>$user_id - $user[first_name] $user[last_name]</h2>";
 
 if($subordinates) { ?>
 	<h3>Subordinates</h3>
@@ -115,7 +118,7 @@ if($managers) { ?>
 
 if($roles) {
 ?>
-<h3>Groups</h3>
+<h3>Roles</h3>
 <form action="" method="POST" >
 <select name="role[]" multiple="multiple" size="10">
 	<?php foreach ($all_roles as $role_id => $role_name) { ?>

@@ -1,6 +1,8 @@
 <?php
 require('common.php');
 
+/// Purpose: A tool to quickly assign Finance Fellows and Coaches to any city with hirarchy(hirarcy is depricated thanks to deposit structure.)
+
 $html = new HTML;
 $city_id = i($QUERY, 'city_id', 25);
 $role_ids = array('FC' => 8, 'POC' => 9, 'Volunteer' => 10);

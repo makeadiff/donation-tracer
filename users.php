@@ -9,7 +9,7 @@ $crud->fields['email']['field_type'] = 'text';
 $crud->setListingQuery("SELECT * FROM users WHERE is_deleted='0'");
 $crud->setListingFields("id", "first_name", "last_name", "email", "phone_no", "city_id", "madapp_user_id", "created_at");
 $crud->setFormFields("first_name", "last_name", "email", "phone_no", "city_id", "is_deleted", "madapp_user_id");
-$crud->addListDataField("city_id", "cities", "name", "1=1 ORDER BY name"); 
+$crud->addListDataField("city_id", "cities", "City", "1=1 ORDER BY name"); 
 $crud->addField("madapp_user_id", 'MADApp User ID','int');
 
 $out = '';

@@ -13,7 +13,6 @@ $crud->addListDataField("city_id", "cities", "City", "1=1 ORDER BY name");
 $crud->addField("madapp_user_id", 'MADApp User ID','int');
 
 $out = '';
-// $curd->set
 
 if(i($QUERY,'id')) {
 	$groups = $sql->getCol("SELECT role FROM roles INNER JOIN user_role_maps ON role_id=roles.id WHERE user_id=$QUERY[id]");

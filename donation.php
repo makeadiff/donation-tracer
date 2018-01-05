@@ -4,7 +4,7 @@ require('common.php');
 $donation_id = i($QUERY, 'donation_id');
 $all_roles = $sql->getById("SELECT id,role FROM roles");
 $donation = $sql->getAssoc("SELECT D.id, U.first_name AS fundraiser, U.id AS fundraiser_id, U.email AS fundraiser_email, DON.first_name AS donor, DON.id AS donor_id,
-										D.donation_status, D.donation_amount, D.created_at, D.updated_at
+										D.donation_status, D.donation_amount, D.created_at, D.updated_at, D.updated_by
 									FROM donations D
 									INNER JOIN users U ON U.id=D.fundraiser_id
 									INNER JOIN donours DON ON DON.id=D.donour_id

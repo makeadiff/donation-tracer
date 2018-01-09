@@ -10,6 +10,9 @@
 	<tr><td>Updated By</td><td><?php echo $donation['updated_by'] ?></td></tr>
 	<tr><td>Created On</td><td><?php echo date($config['time_format_php'], strtotime($donation['created_at'])) ?></td></tr>
 	<tr><td>Updated On</td><td><?php echo date($config['time_format_php'], strtotime($donation['updated_at'])) ?></td></tr>
+	<tr><td>Action</td>
+		<td><a class="ajaxify with-icon delete confirm" href="../../exdon/api/donation/<?php echo $donation['id'] ?>/delete/<?php echo $donation['fundraiser_id'] ?>/self">Delete</a> | 
+			<a class="ajaxify with-icon edit"  href="donation_crud.php?action=edit&id=<?php echo $donation['id'] ?>">Edit</a></td></tr>
 	<tr><td>Deposits</td><td>
 		<?php foreach ($donation['deposits'] as $dep) { ?>
 			<table border="1">

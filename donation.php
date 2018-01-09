@@ -9,6 +9,7 @@ $donation = $sql->getAssoc("SELECT D.id, U.first_name AS fundraiser, U.id AS fun
 									INNER JOIN users U ON U.id=D.fundraiser_id
 									INNER JOIN donours DON ON DON.id=D.donour_id
 									WHERE D.id=$donation_id");
+if(!$donation) die("Can't find any donation with the ID $donation_id");
 $donation['deposits'] = $sql->getAll("SELECT D.id, D.added_on, D.reviewed_on, D.status, 
 										CFROM.first_name AS collected_from,CFROM.email AS collected_from_email, D.collected_from_user_id,
 										GTO.first_name AS given_to,GTO.email AS given_to_email, D.given_to_user_id

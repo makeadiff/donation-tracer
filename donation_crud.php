@@ -13,7 +13,6 @@ $crud->setListingQuery("SELECT D.id,D.fundraiser_id,D.donour_id,D.donation_statu
 	INNER JOIN donours DON ON DON.id=D.donour_id");
 $crud->setListingFields("id", "fundraiser", "donor", "donation_status", "donation_amount", "created_at");
 
-
 $crud->setFormFields("id", "fundraiser_id", "donour_id", "donation_status", "donation_amount", "created_at", "updated_by");
 
 $crud->render();

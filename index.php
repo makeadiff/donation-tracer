@@ -1,7 +1,7 @@
 <?php
 require('common.php');
 
-showTop('Donation Tracer');
+showTop('Donation Tracer - DEPRECATED - DO NOT USE');
 
 if(i($QUERY, 'action')) {
 	$crud = new Crud("donations");
@@ -99,6 +99,8 @@ if(i($QUERY, 'action')) {
 
 		$crud->setListingFields('id', 'donour_id', 'fundraiser_id', 'donation_status', 'donation_amount', 'created_at', 'updated_at', 'updated_by', 'source_id', 'city_name');
 		
+		$crud->allow['delete'] = false;
+		$crud->allow['bulk_operations'] = false;
 	}
 
 	$crud->printAction();

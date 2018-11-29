@@ -1,14 +1,14 @@
 <?php
 require('common.php');
 
-showTop('Donation Tracer - DEPRECATED - DO NOT USE');
+showTop('Donation Tracer');
 
 if(i($QUERY, 'action')) {
-	$crud = new Crud("donations");
+	$crud = new Crud("Donut_Donation");
 	$crud->save_states[] = 'action';
 
-	if(i($QUERY, 'action') == 'Search Donuts' or i($QUERY, 'action') == 'Search Externals') {
-		$wheres = array();
+	if(i($QUERY, 'action') == 'Search') {
+		$wheres = [];
 		if(!empty($_REQUEST['donation_id'])) {
 			$wheres[] = "(D.id='$_REQUEST[donation_id]')";
 			$crud->save_states[] = 'donation_id';
@@ -16,30 +16,30 @@ if(i($QUERY, 'action')) {
 
 		if(!empty($_REQUEST['donor_name'])) {
 			$name_parts = explode(" ", $_REQUEST['donor_name']);
-			$wheres[] = "((DN.first_name LIKE '$name_parts[0]%' AND DN.last_name LIKE '$name_parts[1]%') OR DN.first_name LIKE '$_REQUEST[donor_name]%')";
+			$wheres[] = "((DN.name LIKE '%$_REQUEST[donor_name]%')";
 			$crud->save_states[] = 'donor_name';
 		}
 
 		if(!empty($_REQUEST['donor_phone'])) {
 			$name_parts = explode(" ", $_REQUEST['donor_phone']);
-			$wheres[] = "(DN.phone_no='$_REQUEST[donor_phone]')";
+			$wheres[] = "(DN.phone = '$_REQUEST[donor_phone]')";
 			$crud->save_states[] = 'donor_phone';
 		}
 
 		if(!empty($_REQUEST['donor_email'])) {
 			$name_parts = explode(" ", $_REQUEST['donor_email']);
-			$wheres[] = "(DN.email_id='$_REQUEST[donor_email]')";
+			$wheres[] = "(DN.email = '$_REQUEST[donor_email]')";
 			$crud->save_states[] = 'donor_email';
 		}
 
 		if(!empty($_REQUEST['user_name'])) {
 			$name_parts = explode(" ", $_REQUEST['user_name']);
-			$wheres[] = "((U.first_name LIKE '$name_parts[0]%' AND U.last_name LIKE '$name_parts[1]%') OR U.first_name LIKE '$_REQUEST[user_name]%')";
+			$wheres[] = "((U.name LIKE '%$_REQUEST[user_name]%')";
 			$crud->save_states[] = 'user_name';
 		}
 
 		if(!empty($_REQUEST['user_phone'])) {
-			$wheres[] = "(U.phone_no='$_REQUEST[user_phone]')";
+			$wheres[] = "(U.phone = '$_REQUEST[user_phone]')";
 			$crud->save_states[] = 'user_phone';
 		}
 		if(!empty($_REQUEST['user_id'])) {
@@ -48,56 +48,44 @@ if(i($QUERY, 'action')) {
 		}
 
 		if(!empty($_REQUEST['user_email'])) {
-			$wheres[] = "(U.email='$_REQUEST[user_email]')";
+			$wheres[] = "(U.email = '$_REQUEST[user_email]' OR U.mad_email = '$_REQUEST[user_email]')";
 			$crud->save_states[] = 'user_email';
-		}
-
-		if(!empty($_REQUEST['poc_name'])) {
-			$name_parts = explode(" ", $_REQUEST['poc_name']);
-			$wheres[] = "((U.first_name LIKE '$name_parts[0]%' AND U.last_name LIKE '$name_parts[1]%') OR U.first_name LIKE '$_REQUEST[poc_name]%')";
-			$crud->save_states[] = 'poc_name';
 		}
 
 		if(!empty($_REQUEST['amount'])) {
 			$name_parts = explode(" ", $_REQUEST['amount']);
-			$wheres[] = "(D.donation_amount = '$_REQUEST[amount]%')";
+			$wheres[] = "(D.amount = '$_REQUEST[amount]%')";
 			$crud->save_states[] = 'amount';
 		}
 
-		if(i($QUERY, 'action') == 'Search Donuts') {
-			$table = 'donations';
+		if(i($QUERY, 'action') == 'Search') {
+			$table = 'Donut_Donation';
 			$donor_id = 'donour_id';
 			$more_fields = '';
-		} else {
-			$table = 'external_donations';
-			$donor_id = 'donor_id';
-			$more_fields = 'D.amount AS donation_amount, D.donor_id AS donour_id, ';
 		}
 
 		$query = "SELECT 	D.*, $more_fields
-							DN.first_name AS donor_first_name,DN.last_name  AS donor_last_name, DN.email_id, DN.phone_no,
-							U.first_name,U.last_name, U.email, U.phone_no, C.name AS city_name
+							DN.name AS donor_name, DN.email AS donor_email, DN.phone AS donor_phone,
+							U.name, U.email, U.phone, C.name AS city_name
 					FROM $table D 
-					INNER JOIN donours DN ON DN.id=D.$donor_id
-					INNER JOIN users U ON U.id=D.fundraiser_id
-					INNER JOIN cities C ON U.city_id=C.id
+					INNER JOIN Donut_Donor DN ON DN.id=D.donor_id
+					INNER JOIN User U ON U.id=D.fundraiser_user_id
+					INNER JOIN City C ON U.city_id=C.id
 					WHERE " . implode(" AND ", $wheres);
+		// print $query; exit;
 
 		// $data = $sql->getAll($query);
 		// print "<pre>$query</pre>";
 		// dump($data);
 
 		$crud->setListingQuery($query);
-		$crud->addField('id', 'ID', 'int', array(), array('url'=>'"donation.php?donation_id=$row[id]"', 'text'=>'$row["id"]'),'text', 'url');
-		$crud->addField('city_name', 'City', 'text', array(), array('text'=>'$row["city_name"]'));
-		$crud->addField('fundraiser_id', 'FundRaiser', 'int', array(), 
-			array('url'=>'"users.php?action=edit&amp;id=$row[fundraiser_id]"', 'text'=>'$row["first_name"]. " " . $row["last_name"]'),'text', 'url');
-		$crud->addField('donour_id', 'Donor', 'int', array(), 
-			array('url'=>'"donors.php?action=edit&amp;id=$row[donour_id]"', 'text'=>'$row["donor_first_name"]. " " . $row["donor_last_name"]'),'text', 'url');
-		$crud->addField('updated_by', 'Updater', 'int', array(), 
-			array('url'=>'"users.php?action=edit&amp;id=$row[updated_by]"', 'text'=>'$row["first_name"]. " " . $row["last_name"]'),'text', 'url');
+		$crud->addField('id', 'ID', 'int', [], ['url'=>'"donation.php?donation_id=$row[id]"', 'text'=>'$row["id"]'],'text', 'url');
+		$crud->addField('city_name', 'City', 'text', [], ['text'=> '$row["city_name"]']);
+		$crud->addField('fundraiser_user_id', 'FundRaiser', 'int', [], ['url'=>'"user.php?action=edit&amp;id=$row[fundraiser_user_id]"', 'text'=>'$row["name"]'],'text', 'url');
+		$crud->addField('donour_id', 'Donor', 'int', [], ['url'=>'"donors.php?action=edit&amp;id=$row[donor_id]"', 'text'=>'$row["donor_name"]'],'text', 'url');
+		$crud->addField('updated_by_user_id', 'Updater', 'int', [], ['url'=>'"users.php?action=edit&amp;id=$row[updated_by_user_id]"', 'text'=>'$row["name"]'],'text', 'url');
 
-		$crud->setListingFields('id', 'donour_id', 'fundraiser_id', 'donation_status', 'donation_amount', 'created_at', 'updated_at', 'updated_by', 'source_id', 'city_name');
+		$crud->setListingFields('id', 'donour_id', 'fundraiser_user_id', 'status', 'amount', 'added_on', 'updated_on', 'updated_by_user_id', 'city_name');
 		
 		$crud->allow['delete'] = false;
 		$crud->allow['bulk_operations'] = false;
@@ -136,8 +124,6 @@ if(i($QUERY, 'action')) {
 <label for="user_id">User ID</label>
 <input type="text" name="user_id" id="user_id" value="" /><br />
 
-<label for="poc_name">POC Name</label>
-<input type="text" name="poc_name" id="poc_name" value="" /><br />
 </fieldset>
 
 <fieldset>
@@ -149,8 +135,7 @@ if(i($QUERY, 'action')) {
 <input type="text" name="amount" id="amount" value="" /><br />
 </fieldset>
 
-<input type="submit" value="Search Donuts" name="action" />
-<input type="submit" value="Search Externals" name="action" />
+<input type="submit" value="Search" name="action" />
 </form>
 
 <?php

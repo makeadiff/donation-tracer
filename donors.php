@@ -1,5 +1,5 @@
 <?php
 require('common.php');
  
-$crud = new Crud("donours");
+$crud = new Crud("Donut_Donor");
 $crud->render();

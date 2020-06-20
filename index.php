@@ -4,7 +4,11 @@ require('common.php');
 showTop('Donation Tracer');
 
 if(i($QUERY, 'action')) {
-	$crud = new Crud("Donut_Donation");
+	$crud = new iframe\iframe\Crud("Donut_Donation");
+	$crud->addField('fundraiser_user_id', 'Fund Raiser ID', 'int');
+	$crud->addField('donor_id', 'Donor ID', 'int');
+	$crud->addField('with_user_id', 'With User ID', 'int');
+	$crud->addField('updated_by_user_id', 'Updater User ID', 'int');
 	$crud->save_states[] = 'action';
 
 	if(i($QUERY, 'action') == 'Search') {
@@ -16,7 +20,7 @@ if(i($QUERY, 'action')) {
 
 		if(!empty($_REQUEST['donor_name'])) {
 			$name_parts = explode(" ", $_REQUEST['donor_name']);
-			$wheres[] = "((DN.name LIKE '%$_REQUEST[donor_name]%')";
+			$wheres[] = "(DN.name LIKE '%$_REQUEST[donor_name]%')";
 			$crud->save_states[] = 'donor_name';
 		}
 
@@ -34,7 +38,7 @@ if(i($QUERY, 'action')) {
 
 		if(!empty($_REQUEST['user_name'])) {
 			$name_parts = explode(" ", $_REQUEST['user_name']);
-			$wheres[] = "((U.name LIKE '%$_REQUEST[user_name]%')";
+			$wheres[] = "(U.name LIKE '%$_REQUEST[user_name]%')";
 			$crud->save_states[] = 'user_name';
 		}
 
@@ -81,6 +85,7 @@ if(i($QUERY, 'action')) {
 		$crud->setListingQuery($query);
 		$crud->addField('id', 'ID', 'int', [], ['url'=>'"donation.php?donation_id=$row[id]"', 'text'=>'$row["id"]'],'text', 'url');
 		$crud->addField('city_name', 'City', 'text', [], ['text'=> '$row["city_name"]']);
+		$crud->addField('status', 'Status', 'text');
 		$crud->addField('fundraiser_user_id', 'FundRaiser', 'int', [], ['url'=>'"user.php?action=edit&amp;id=$row[fundraiser_user_id]"', 'text'=>'$row["name"]'],'text', 'url');
 		$crud->addField('donour_id', 'Donor', 'int', [], ['url'=>'"donors.php?action=edit&amp;id=$row[donor_id]"', 'text'=>'$row["donor_name"]'],'text', 'url');
 		$crud->addField('updated_by_user_id', 'Updater', 'int', [], ['url'=>'"users.php?action=edit&amp;id=$row[updated_by_user_id]"', 'text'=>'$row["name"]'],'text', 'url');

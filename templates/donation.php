@@ -49,9 +49,9 @@ $deposit_status = [
 	</td></tr>
 	<tr><td><br /></td></tr>
 
-	<tr><td><strong>Actions</strong></td>
-		<td><a class="ajaxify with-icon delete confirm" href="index.php?action=delete&select_row[]=<?php echo $donation['id'] ?>">Delete</a>
-			| <a class="ajaxify with-icon edit" href="index.php?action=edit&id=<?php echo $donation['id'] ?>">Edit</a></td></tr>
+	<tr><td><strong>Actions</strong></td><td>
+		<!-- <a class="ajaxify with-icon delete confirm" href="index.php?action=delete&select_row[]=<?php echo $donation['id'] ?>">Delete</a> |  -->
+			<a class="ajaxify with-icon edit" href="index.php?action=edit&id=<?php echo $donation['id'] ?>">Edit</a></td></tr>
 	<tr><td>Donor Salesforce ID</td>
 		<td><form action="donation.php" method="post">
 				<input type="hidden" name="donation_id" value="<?php echo $donation['id'] ?>" />
@@ -59,4 +59,9 @@ $deposit_status = [
 				<input type="text" name="donor_finance_id" value="<?php echo $donation['donor_finance_id'] ?>" />
 				<input type="submit" name="action" value="Save Finance ID" class="btn btn-primary" />
 			</form></td></tr>
+	<tr><td>Collected by National Account</td><td><form action="donation.php" method="post">
+				<input type="hidden" name="donation_id" value="<?php echo $donation['id'] ?>" />
+				<input type="submit" name="action" value="Mark as Collected" class="btn btn-primary" />
+			</form>
+			This will automatically create a deposit from the final deposited person to national office.</td></tr>
 </table>

@@ -1,21 +1,39 @@
 <?php
 require('common.php');
+$app = require '../includes/Phonenix.php';
+use App\Models\Deposit;
 
 $html = new iframe\HTML\HTML;
 $donation_id = i($QUERY, 'donation_id');
 $action = i($QUERY, 'action');
+$national_account_user_id = 163416;
+
+
 if($action == "Save Finance ID" and i($QUERY, 'donor_id') and i($QUERY, 'donor_finance_id')) {
 	$sql->update("Donut_Donor", ['donor_finance_id' => $QUERY['donor_finance_id']], ['id' => $QUERY['donor_id']]);
 
-} elseif($action == "Save Deposit") {
+} elseif($action == "Save Deposit" and i($QUERY, 'deposit_information') and i($QUERY, 'status')) {
 	$sql->update("Donut_Deposit", [
 		'deposit_information' 	=> $QUERY['deposit_information'],
 		'status'				=> $QUERY['status']
 	], ['id' => $QUERY['deposit_id']]);
-} elseif($action == "Save Amount") {
+
+} elseif($action == "Save Amount" and i($QUERY, 'donation_id') and i($QUERY, 'amount')) {
 	$sql->update("Donut_Donation", [
 		'amount' 	=> $QUERY['amount']
 	], ['id' => $QUERY['donation_id']]);
+
+} elseif($action == "Mark as Collected" and i($QUERY, 'donation_id')) {
+	$user_with_donation = $sql->getOne("SELECT with_user_id FROM Donut_Donation WHERE id={$QUERY['donation_id']}");
+
+	if($user_with_donation != $national_account_user_id) {
+		$deposit_model = new Deposit;
+		$deposit = $deposit_model->add($user_with_donation, $national_account_user_id, [$QUERY['donation_id']]);
+
+		$deposit_model->approve($_SESSION['user_id'], $deposit->id);
+
+		dump($deposit); exit;
+	}
 }
 
 $donation = $sql->getAssoc("SELECT D.id, U.name AS fundraiser, U.id AS fundraiser_user_id, U.email AS fundraiser_email, DON.name AS donor, DON.id AS donor_id,

@@ -4,3 +4,6 @@
 .form-area label {
     width: 150px;
 }
+input[type="text"] {
+    color: #999;
+}

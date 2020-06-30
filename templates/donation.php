@@ -13,7 +13,12 @@ $deposit_status = [
 
 <table>
 	<tr><td width="150">ID</td><td><a href="donation_crud.php?action=edit&id=<?php echo $donation['id'] ?>"><?php echo $donation['id'] ?></a></td></tr>
-	<tr><td>Amount</td><td><?php echo $donation['amount'] ?></td></tr>
+	<tr><td>Amount</td><td><form action="donation.php" method="post">
+								<?php
+								$html->buildInput('donation_id', '', 'hidden', $donation['id']);
+								$html->buildInput('amount', '', 'text', $donation['amount']);
+								$html->buildInput('action', '', 'submit', 'Save Amount', ['class' => 'btn btn-primary']); ?>
+							</form></td></tr>
 	<tr><td>Fundraiser</td><td><a href="user.php?action=edit&id=<?php echo $donation['fundraiser_user_id'] ?>"><?php 
 				echo $donation['fundraiser'] . ' / ' . $donation['fundraiser_email'] ?></a></td></tr>
 	<tr><td>Donor</td><td><a href="donors.php?action=edit&id=<?php echo $donation['donor_id'] ?>"><?php echo $donation['donor'] ?></a></td></tr>

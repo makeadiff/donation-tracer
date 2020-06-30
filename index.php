@@ -108,39 +108,39 @@ if(i($QUERY, 'action')) {
 <fieldset>
 <legend>Donor Info</legend>
 <label for="donor_name">Donor Name</label>
-<input type="text" name="donor_name" id="donor_name" value="" /><br />
+<input type="text" name="donor_name" id="donor_name" value="" class="form-control" /><br />
 <label for="donor_phone">Donor Phone</label>
-<input type="text" name="donor_phone" id="donor_phone" value="" /><br />
+<input type="text" name="donor_phone" id="donor_phone" value="" class="form-control" /><br />
 <label for="donor_email">Donor Email</label>
-<input type="text" name="donor_email" id="donor_email" value="" /><br />
+<input type="text" name="donor_email" id="donor_email" value="" class="form-control" /><br />
 </fieldset>
 
 <fieldset>
 <legend>User Info</legend>
 <label for="user_name">User Name</label>
-<input type="text" name="user_name" id="user_name" value="" /><br />
+<input type="text" name="user_name" id="user_name" value="" class="form-control" /><br />
 
 <label for="user_phone">User Phone Number</label>
-<input type="text" name="user_phone" id="user_phone" value="" /><br />
+<input type="text" name="user_phone" id="user_phone" value="" class="form-control" /><br />
 
 <label for="user_email">User Email</label>
-<input type="text" name="user_email" id="user_email" value="" /><br />
+<input type="text" name="user_email" id="user_email" value="" class="form-control" /><br />
 
 <label for="user_id">User ID</label>
-<input type="text" name="user_id" id="user_id" value="" /><br />
+<input type="text" name="user_id" id="user_id" value="" class="form-control" /><br />
 
 </fieldset>
 
 <fieldset>
 <legend>Donation Info</legend>
 <label for="donation_id">Donation ID</label>
-<input type="text" name="donation_id" id="donation_id" value="" /><br />
+<input type="text" name="donation_id" id="donation_id" value="" class="form-control" /><br />
 
 <label for="amount">Amount</label>
-<input type="text" name="amount" id="amount" value="" /><br />
+<input type="text" name="amount" id="amount" value="" class="form-control" /><br />
 </fieldset>
 
-<input type="submit" value="Search" name="action" />
+<input type="submit" value="Search" name="action" class="btn btn-success" />
 </form>
 
 <?php

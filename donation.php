@@ -12,6 +12,10 @@ if($action == "Save Finance ID" and i($QUERY, 'donor_id') and i($QUERY, 'donor_f
 		'deposit_information' 	=> $QUERY['deposit_information'],
 		'status'				=> $QUERY['status']
 	], ['id' => $QUERY['deposit_id']]);
+} elseif($action == "Save Amount") {
+	$sql->update("Donut_Donation", [
+		'amount' 	=> $QUERY['amount']
+	], ['id' => $QUERY['donation_id']]);
 }
 
 $donation = $sql->getAssoc("SELECT D.id, U.name AS fundraiser, U.id AS fundraiser_user_id, U.email AS fundraiser_email, DON.name AS donor, DON.id AS donor_id,

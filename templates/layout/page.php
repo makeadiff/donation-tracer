@@ -7,7 +7,7 @@
 <link href="<?php echo $config['common_library_url'] ?>assets/css/style.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $config['common_library_url'] ?>assets/images/silk_theme.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $config['common_library_url'] ?>bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="<?php echo $config['app_url'] ?>css/style.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $config['app_url'] ?>assets/css/style.css" rel="stylesheet" type="text/css" />
 <?php echo $css_includes ?>
 </head>
 <body>

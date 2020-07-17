@@ -50,7 +50,7 @@ $deposit_status = [
 	<tr><td><br /></td></tr>
 
 	<tr><td><strong>Actions</strong></td><td>
-		<!-- <a class="ajaxify with-icon delete confirm" href="index.php?action=delete&select_row[]=<?php echo $donation['id'] ?>">Delete</a> |  -->
+			<a class="ajaxify with-icon delete" href="#" data-donation-id="<?php echo $donation['id'] ?>">Delete</a> | 
 			<a class="ajaxify with-icon edit" href="index.php?action=edit&id=<?php echo $donation['id'] ?>">Edit</a></td></tr>
 	<tr><td>Donor Salesforce ID</td>
 		<td><form action="donation.php" method="post">

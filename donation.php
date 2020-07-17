@@ -8,7 +8,6 @@ $donation_id = i($QUERY, 'donation_id');
 $action = i($QUERY, 'action');
 $national_account_user_id = 163416;
 
-
 if($action == "Save Finance ID" and i($QUERY, 'donor_id') and i($QUERY, 'donor_finance_id')) {
 	$sql->update("Donut_Donor", ['donor_finance_id' => $QUERY['donor_finance_id']], ['id' => $QUERY['donor_id']]);
 

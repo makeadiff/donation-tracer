@@ -1,4 +1,4 @@
-const api_base_url = 'http://localhost/MAD/api/index.php/v1/';
+var api_base_url = 'http://localhost/MAD/api/index.php/v1/';
 if(location.href.search('makeadiff.in') != -1) {
 	api_base_url = "http://makeadiff.in/api/v1/";
 	if(location.href.search('https') != -1) {

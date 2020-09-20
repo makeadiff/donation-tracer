@@ -29,9 +29,12 @@ if($action == "Save Finance ID" and i($QUERY, 'donor_id') and i($QUERY, 'donor_f
 		$deposit_model = new Deposit;
 		$deposit = $deposit_model->add($user_with_donation, $national_account_user_id, [$QUERY['donation_id']]);
 
-		$deposit_model->approve($_SESSION['user_id'], $deposit->id);
-
-		dump($deposit); exit;
+		if($deposit) {
+			$deposit_model->approve($_SESSION['user_id'], $deposit->id);
+			$QUERY['success'] = "Deposit made successfully";
+		} else {
+			$QUERY['error'] = "<ul><li>" . implode("</li><li>", $deposit_model->errors) . "</li></ul>";
+		}
 	}
 }
 
